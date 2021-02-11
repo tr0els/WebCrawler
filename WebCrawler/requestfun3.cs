@@ -34,13 +34,11 @@ namespace WebCrawler
             Console.WriteLine("test");
 
             // maybe change the client.GetAsync to a method call that does more
-            var tasks = Enumerable.Range(0, 200).Select(i => client.GetAsync("https://www.google.com"));
+            var tasks = Enumerable.Range(0, 100).Select(i => client.GetAsync("https://www.google.com"));
 
             Console.WriteLine("test2");
 
             await Task.WhenAll(tasks);
-
-            Console.WriteLine("test3");
 
 
             sw.Stop();

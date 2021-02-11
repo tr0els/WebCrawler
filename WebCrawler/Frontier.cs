@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace WebCrawler
     public class Frontier
     {
         private Hashtable _allUrls = new Hashtable(); // All found urls (unordered, good lookup performance)
-        private Queue<string> _frontierUrls = new Queue<string>(); // LIFO (breath first)
+        private ConcurrentQueue<string> _frontierUrls = new ConcurrentQueue<string>(); // LIFO (breath first)
 
         public void AddUrl(string url)
         {
@@ -33,8 +34,12 @@ namespace WebCrawler
 
         public string NextUrl()
         {
-            if (_frontierUrls.Count > 0) return _frontierUrls.Dequeue();
-            return null;
+            string nextUrl = null;
+            if (_frontierUrls.Count > 0)
+            {
+                while(!_frontierUrls.TryDequeue(out nextUrl));
+            }
+            return nextUrl;
         }
     }
 }

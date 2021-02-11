@@ -51,10 +51,10 @@ namespace WebCrawler
             */
 
             // fun 4
-            /*
-            requestfun4 fun = new requestfun4();
-            fun.SendAsync();
-            */
+            
+            requestfun4 fun = new requestfun4(frontier);
+            await fun.SendAsync(url); // remove await if program should end before printing to terminal
+            
         }
     }
 }
