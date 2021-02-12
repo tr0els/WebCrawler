@@ -14,7 +14,7 @@ namespace WebCrawler
 
         public void AddUrl(string url)
         {
-            // Add url to frontier queue if url is not already in foundUrls
+            // Add url to frontier queue if url is not already in allUrls
             if (!_allUrls.Contains(url))
             {
                 _allUrls.Add(url, url);

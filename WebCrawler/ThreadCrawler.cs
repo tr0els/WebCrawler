@@ -23,7 +23,7 @@ namespace WebCrawler
         private int _maxConnectionsPerServer = 3; // max simultaneous http requests per server
         private int _maxUrlsToVisit = 100; // stops crawler after visiting n urls
         private int _maxTime = 60*2; // stops crawler after n seconds
-        private int _urlTimeout = 5; // seconds before url request times out
+        private int _urlTimeout = 2; // seconds before url request times out
 
         private int _maxTaskCount = 10; // tasks spawned at once (batch size)
         private string _keywordToFind = "autonomous agent"; // empty to disable
@@ -45,6 +45,7 @@ namespace WebCrawler
                 MaxConnectionsPerServer = _maxConnectionsPerServer
             };
 
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             _httpClient = new HttpClient(socketsHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(_urlTimeout);
         }
@@ -74,7 +75,7 @@ namespace WebCrawler
             sw.Stop();
 
             Console.WriteLine("");
-            Console.WriteLine($"Done crawling {_numVisitedUrls} urls in {sw.Elapsed.TotalSeconds}secs ({sw.Elapsed.TotalMinutes}mins)");
+            Console.WriteLine($"Done crawling {_numVisitedUrls} urls in {Math.Round(sw.Elapsed.TotalSeconds, 0)}secs ({Math.Round(sw.Elapsed.TotalMinutes, 2)}mins)");
             Console.WriteLine($"Frontier constains another {_frontier.UrlsInFrontier()} urls");
             Console.WriteLine($"A total of {_numKbDownloaded/1000}MB has been downloaded");
             if (!string.IsNullOrEmpty(_keywordToFind))
