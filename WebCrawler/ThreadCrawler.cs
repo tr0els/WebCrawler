@@ -20,8 +20,8 @@ namespace WebCrawler
         private string _validContentTypes = "text/html, text/plain, text/xml";
         private string _validSchemes = "http, https"; // ignore mailto, tel, news, ftp etc.
 
-        private int _maxConnectionsPerServer = 5; // max simultaneous http requests per server
-        private int _maxUrlsToVisit = 1000; // stops crawler after visiting n urls
+        private int _maxConnectionsPerServer = 3; // max simultaneous http requests per server
+        private int _maxUrlsToVisit = 100; // stops crawler after visiting n urls
         private int _maxTime = 60*2; // stops crawler after n seconds
         private int _urlTimeout = 5; // seconds before url request times out
 
