@@ -20,9 +20,10 @@ namespace WebCrawler
         private string _validContentTypes = "text/html, text/plain, text/xml";
         private string _validSchemes = "http, https"; // ignore mailto, tel, news, ftp etc.
 
-        private int _maxConnectionsPerServer = 10; // max simultaneous http requests per server
+        private int _maxConnectionsPerServer = 5; // max simultaneous http requests per server
         private int _maxUrlsToVisit = 200; // stops crawler after visiting n urls
         private int _maxTime = 60*2; // stops crawler after n seconds
+        private int _urlTimeout = 5; // seconds before url request times out
 
         private int _maxTaskCount = 10; // tasks spawned at once (batch size)
         private string _keywordToFind = "autonomous agent"; // empty to disable
@@ -45,6 +46,7 @@ namespace WebCrawler
             };
 
             _httpClient = new HttpClient(socketsHandler);
+            _httpClient.Timeout = TimeSpan.FromSeconds(_urlTimeout);
         }
 
         public async Task SendAsync()
@@ -122,7 +124,7 @@ namespace WebCrawler
                 int contentSizeInKb = (int)response.Content.Headers.ContentLength.Value / 1000;
                 _numKbDownloaded += contentSizeInKb;
 
-                //Console.WriteLine($"Visited url #{urlNum} - {url} - content: ({contentSizeInKb}kb)");
+                Console.WriteLine($"Visited url #{urlNum} - {url} - content: ({contentSizeInKb}kb)");
 
                 // Find new urls in page
                 List<string> pageUrls = FindUrls(content);
