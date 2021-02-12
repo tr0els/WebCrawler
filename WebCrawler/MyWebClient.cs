@@ -18,6 +18,7 @@ namespace WebCrawler
             get { return _responseUri; }
         }
 
+        // trick to be able to return url after being redirected
         protected override WebResponse GetWebResponse(WebRequest request)
         {
             WebResponse response = null;
