@@ -21,7 +21,7 @@ namespace WebCrawler
         private string _validSchemes = "http, https"; // ignore mailto, tel, news, ftp etc.
 
         private int _maxConnectionsPerServer = 5; // max simultaneous http requests per server
-        private int _maxUrlsToVisit = 200; // stops crawler after visiting n urls
+        private int _maxUrlsToVisit = 1000; // stops crawler after visiting n urls
         private int _maxTime = 60*2; // stops crawler after n seconds
         private int _urlTimeout = 5; // seconds before url request times out
 
@@ -74,7 +74,7 @@ namespace WebCrawler
             sw.Stop();
 
             Console.WriteLine("");
-            Console.WriteLine($"Done crawling {_numVisitedUrls} urls in {sw.Elapsed.Seconds}secs ({sw.Elapsed.Minutes}mins)");
+            Console.WriteLine($"Done crawling {_numVisitedUrls} urls in {sw.Elapsed.TotalSeconds}secs ({sw.Elapsed.TotalMinutes}mins)");
             Console.WriteLine($"Frontier constains another {_frontier.UrlsInFrontier()} urls");
             Console.WriteLine($"A total of {_numKbDownloaded/1000}MB has been downloaded");
             if (!string.IsNullOrEmpty(_keywordToFind))
