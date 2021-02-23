@@ -48,6 +48,7 @@ namespace WebCrawler
             System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
             _httpClient = new HttpClient(socketsHandler);
             _httpClient.Timeout = TimeSpan.FromSeconds(_urlTimeout);
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)");
         }
 
         public async Task SendAsync()
